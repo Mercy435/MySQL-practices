@@ -1,6 +1,6 @@
 create database sql_w3_schools;
 create table customers(
-				customerid int not null,
+				customerid int not null auto_increment,
 				customername varchar(50),
                 contactname varchar(50),
                 address varchar(100),
@@ -9,8 +9,9 @@ create table customers(
                 country varchar(50),
                 primary key(customerid)
                 );
-alter table customers drop  postalcode;
+alter table customers drop postalcode;
 alter table customers add postalcode varchar(50);
+alter table customers modify customerid int NOT NULL AUTO_INCREMENT 
 
 insert into customers (customerid, customername, contactname, address, city, postalcode, country)
 values('1','alfreds futterkiste', 'maria anders', 'Obere Str. 57', 'Berlin', '12209', 'Germany'
@@ -107,10 +108,21 @@ select * from customers order by country desc;
 select * from customers order by country desc, customername asc;
 insert into customers (customerid, customername, contactname, address, city, postalcode, country)
 values ('6','Cardinal', 'Tom B. Erichsen', 'Skagen 21', 'Stavanger', '4006', 'Norway');
-insert into customers (customerid, customername, city, country) values ('7', 'Cardinal', 'Stavanger', 'Norway');
+insert into customers ( customername, city, country) values ( 'Cardinal', 'Stavanger', 'Norway');
+insert into customers (customername,city) values ('Lars Monsen', ' LA ');
 select customername, contactname, address from customers where address is null;
 select customername, contactname, address from customers where address is not null;
-
-
-
+create view Brazil_Customers as
+select customername, contactname from customers where country = 'Brazil';
+select * from brazil_customers;
+create view Poducts_Above_Average_Price as 
+SELECT ProductName, Price
+FROM Products
+WHERE Price > (SELECT AVG(Price) FROM Products);
+CREATE OR REPLACE VIEW Brazil_Customers AS -- add city column
+SELECT CustomerName, ContactName, City
+FROM Customers
+WHERE Country = 'Brazil';
+select * from brazil_customers;
+DROP VIEW Brazil_Customers;
 
